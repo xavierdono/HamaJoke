@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xav.hamajoke.R;
 
@@ -28,6 +29,9 @@ public class OnItemClickListenerListView implements OnItemClickListener {
 			p.release();
 			p = null;
 		} catch (Exception e) {
+			
+			Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+			
 			p.release();
 			p = null;
 		}

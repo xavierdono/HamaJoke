@@ -2,8 +2,14 @@
 <resources>
 
     <string name="app_name">Hama Joke</string>
+    
     <string name="action_settings">Options</string>
-    <string name="txtName">Nom : </string>
-    <string name="hello_world">Hello world!</string>
+    
+    <string name="lblNameMain">Nom :</string>
+    
+    <string name="lblNameOption">Nom :</string>
+    <string name="txtHintOptionsRep">Saisissez le nom du répertoire</string>
+    <string name="btnSave">Sauvegarder</string>
+    <string name="btnImport">Importer un fichier son</string>
 
 </resources>

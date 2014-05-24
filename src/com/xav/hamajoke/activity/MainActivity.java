@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.xav.hamajoke.R;
 import com.xav.hamajoke.adapter.ArrayAdapterItem;
@@ -16,14 +17,14 @@ import com.xav.hamajoke.listener.OnItemSelectedListenerSpinner;
 
 public class MainActivity extends Activity {
 
-	private String path = "";
+	public static String PATH_HAMA = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_fragment);
+		setContentView(R.layout.main);
 
-		path = getApplicationInfo().dataDir + "/HAMA";
+		PATH_HAMA = getApplicationInfo().dataDir + "/HAMA";
 
 		createHamaDirectory();
 
@@ -32,7 +33,7 @@ public class MainActivity extends Activity {
 
 	private void createHamaDirectory() {
 		
-		File f = new File(path);
+		File f = new File(PATH_HAMA);
 
 		if (!f.exists()) {
 			f.mkdir();
@@ -41,25 +42,29 @@ public class MainActivity extends Activity {
 
 	private void loadSpinner() {
 		
-		File f = new File(path);
+		try {
+			File f = new File(PATH_HAMA);
 
-		if (f.list().length != 0) {
-			ObjectItem[] items = new ObjectItem[f.list().length];
+			if (f.list().length != 0) {
+				ObjectItem[] items = new ObjectItem[f.list().length];
 
-			for (int i = 0; i < items.length; i++) {
-				items[i] = new ObjectItem(path.concat("/"
-						+ f.list()[i].toString()), f.list()[i].toString());
+				for (int i = 0; i < items.length; i++) {
+					items[i] = new ObjectItem(PATH_HAMA.concat("/"
+							+ f.list()[i].toString()), f.list()[i].toString());
+				}
+
+				ArrayAdapterItem spinnerAdapter = new ArrayAdapterItem(this,
+						R.layout.list_view_row_item, items);
+				spinnerAdapter
+						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+				Spinner contextChooser = (Spinner) findViewById(R.id.spinnerName);
+				contextChooser
+						.setOnItemSelectedListener(new OnItemSelectedListenerSpinner(this));
+				contextChooser.setAdapter(spinnerAdapter);
 			}
-
-			ArrayAdapterItem spinnerAdapter = new ArrayAdapterItem(this,
-					R.layout.list_view_row_item, items);
-			spinnerAdapter
-					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-			Spinner contextChooser = (Spinner) findViewById(R.id.spinnerName);
-			contextChooser
-					.setOnItemSelectedListener(new OnItemSelectedListenerSpinner(this));
-			contextChooser.setAdapter(spinnerAdapter);
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -74,7 +79,7 @@ public class MainActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			Intent intent = new Intent(this, OptionsActivity.class);
-			intent.putExtra("PATH", path);
+			intent.putExtra("PATH", PATH_HAMA);
 			startActivity(intent);
 			return true;
 		}

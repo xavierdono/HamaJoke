@@ -25,18 +25,20 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080006;
-        public static final int btnInit=0x7f080001;
-        public static final int linearLayoutMain=0x7f080003;
-        public static final int linearLayoutOptions=0x7f080000;
-        public static final int listViewNom=0x7f080005;
-        public static final int spinnerName=0x7f080004;
-        public static final int textViewItem=0x7f080002;
+        public static final int action_settings=0x7f080008;
+        public static final int btnImport=0x7f080007;
+        public static final int btnSave=0x7f080006;
+        public static final int linearLayoutMain=0x7f080001;
+        public static final int linearLayoutOptions=0x7f080004;
+        public static final int listViewNom=0x7f080003;
+        public static final int spinnerName=0x7f080002;
+        public static final int textViewItem=0x7f080000;
+        public static final int txtRep=0x7f080005;
     }
     public static final class layout {
-        public static final int fragment_options=0x7f030000;
-        public static final int list_view_row_item=0x7f030001;
-        public static final int main_fragment=0x7f030002;
+        public static final int list_view_row_item=0x7f030000;
+        public static final int main=0x7f030001;
+        public static final int options=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f070000;
@@ -45,8 +47,11 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050003;
-        public static final int txtName=0x7f050002;
+        public static final int btnImport=0x7f050006;
+        public static final int btnSave=0x7f050005;
+        public static final int lblNameMain=0x7f050002;
+        public static final int lblNameOption=0x7f050003;
+        public static final int txtHintOptionsRep=0x7f050004;
     }
     public static final class style {
         /** 
