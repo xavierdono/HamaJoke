@@ -2,6 +2,7 @@ package com.xav.hamajoke.listener;
 
 import java.io.File;
 
+import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -17,6 +18,7 @@ import com.xav.hamajoke.domain.ObjectItem;
 public class OnItemSelectedListenerSpinner implements OnItemSelectedListener {
 
 	private MainActivity mainActivity;
+	private MediaPlayer p;
 
 	public OnItemSelectedListenerSpinner(MainActivity mainActivity) {
 		this.mainActivity = mainActivity;
@@ -49,15 +51,16 @@ public class OnItemSelectedListenerSpinner implements OnItemSelectedListener {
 					.setDropDownViewResource(android.R.layout.simple_selectable_list_item);
 
 			contextChooser
-					.setOnItemClickListener(new OnItemClickListenerListView());
+					.setOnItemClickListener(new OnItemClickListenerListView(p));
 			contextChooser.setAdapter(listViewAdapter);
 		} catch (Exception e) {
 			Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
+		p.release();
+		p = null;
 	}
 }

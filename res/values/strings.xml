@@ -10,6 +10,6 @@
     <string name="lblNameOption">Nom :</string>
     <string name="txtHintOptionsRep">Saisissez le nom du répertoire</string>
     <string name="btnSave">Sauvegarder</string>
-    <string name="btnImport">Importer un fichier son</string>
+    <string name="btnImport">Importer</string>
 
 </resources>

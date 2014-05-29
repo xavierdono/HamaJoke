@@ -17,6 +17,7 @@ import com.xav.hamajoke.listener.OnItemSelectedListenerSpinner;
 
 public class MainActivity extends Activity {
 
+	private static final int RESULT_OPTIONS = 0;
 	public static String PATH_HAMA = "";
 
 	@Override
@@ -79,10 +80,18 @@ public class MainActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			Intent intent = new Intent(this, OptionsActivity.class);
-			intent.putExtra("PATH", PATH_HAMA);
-			startActivity(intent);
+			startActivityForResult(intent, RESULT_OPTIONS);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+        if (requestCode == RESULT_OPTIONS) {
+            if (resultCode == RESULT_OK) {
+            	loadSpinner();
+            }
+        }
+    }
 }

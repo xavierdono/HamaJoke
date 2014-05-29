@@ -11,6 +11,16 @@ import com.xav.hamajoke.R;
 
 public class OnItemClickListenerListView implements OnItemClickListener {
 
+	private MediaPlayer p;
+	
+	public OnItemClickListenerListView(MediaPlayer p) {
+		this.p = p;
+		
+		if(this.p == null) {
+			this.p = new MediaPlayer();
+		}
+	}
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -19,21 +29,19 @@ public class OnItemClickListenerListView implements OnItemClickListener {
 				.findViewById(R.id.textViewItem));
 
 		String listItemId = textViewItem.getTag().toString();
-
-		MediaPlayer p = new MediaPlayer();
+		
+		
 		try {
-			p.setDataSource(listItemId);
-			p.prepare();
-			p.start();
+			this.p.setDataSource(listItemId);
+			this.p.prepare();
+			this.p.start();
 
-			p.release();
-			p = null;
 		} catch (Exception e) {
 			
 			Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 			
-			p.release();
-			p = null;
+			this.p.release();
+			this.p = null;
 		}
 	}
 }

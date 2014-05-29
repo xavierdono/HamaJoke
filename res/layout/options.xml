@@ -29,6 +29,13 @@
             android:hint="@string/txtHintOptionsRep"
             android:inputType="textCapWords" />
 
+        <Button
+            android:id="@+id/btnSave"
+            style="?android:attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="save"
+            android:text="@string/btnSave" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,21 +44,27 @@
         android:gravity="top"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btnSave"
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/lblNameMain"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Spinner
+            android:id="@+id/spinnerName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
-            android:text="@string/btnSave"
-            style="?android:attr/buttonStyle"
-            android:onClick="save" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btnImport"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btnImport"
-            style="?android:attr/buttonStyle"
-            android:onClick="importFile" />
+            android:onClick="importFile"
+            android:text="@string/btnImport" />
     </LinearLayout>
 
 </LinearLayout>

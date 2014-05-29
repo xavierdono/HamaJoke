@@ -11,14 +11,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.xav.hamajoke.R;
+import com.xav.hamajoke.adapter.ArrayAdapterItem;
+import com.xav.hamajoke.domain.ObjectItem;
 
 public class OptionsActivity extends Activity {
 
-	private String path = "";
+	private String PATH_HAMA = "";
 	private static final int FILE_SELECT_CODE = 0;
 
 	@Override
@@ -26,25 +31,37 @@ public class OptionsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.options);
 
-		Intent intent = getIntent();
-		this.path = intent.getStringExtra(MainActivity.PATH_HAMA);
+		this.PATH_HAMA = MainActivity.PATH_HAMA;
+
+		loadSpinner();
 	}
 
 	public void save(View view) {
 
 		try {
-			TextView textViewItem = (TextView) view.findViewById(R.id.txtRep);
+			EditText textViewItem = (EditText) this.findViewById(R.id.txtRep);
 
-			File f = new File(this.path + "/" + textViewItem.getText());
+			if (textViewItem.getText().toString().trim().length() != 0) {
 
-			if (!f.exists()) {
-				f.mkdir();
-				Toast.makeText(view.getContext(), "Répertoire créé !",
-						Toast.LENGTH_LONG).show();
-				this.path = f.getAbsolutePath();
-			} else {
+				File f = new File(this.PATH_HAMA + "/"
+						+ textViewItem.getText().toString().trim());
+
+				if (!f.exists()) {
+					f.mkdir();
+					Toast.makeText(view.getContext(), "Répertoire créé !",
+							Toast.LENGTH_LONG).show();
+
+					setResult(RESULT_OK);
+				} else {
+					Toast.makeText(view.getContext(),
+							"Le répertoire existe déjà !", Toast.LENGTH_LONG)
+							.show();
+				}
+			}
+			else
+			{
 				Toast.makeText(view.getContext(),
-						"Le répertoire existe déjà !", Toast.LENGTH_LONG)
+						"Veuillez saisir un nom de répertoire !", Toast.LENGTH_LONG)
 						.show();
 			}
 		} catch (Exception e) {
@@ -64,8 +81,46 @@ public class OptionsActivity extends Activity {
 					Intent.createChooser(fileIntent, "Sélectionnez un fichier"),
 					FILE_SELECT_CODE);
 		} catch (android.content.ActivityNotFoundException ex) {
-			Toast.makeText(this, "Please install a File Manager.",
+			Toast.makeText(this, "SVP, installer un gestionnaire de fichier.",
 					Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void loadSpinner() {
+
+		try {
+			File f = new File(PATH_HAMA);
+
+			if (f.list().length != 0) {
+				ObjectItem[] items = new ObjectItem[f.list().length];
+
+				for (int i = 0; i < items.length; i++) {
+					items[i] = new ObjectItem(PATH_HAMA.concat("/"
+							+ f.list()[i].toString()), f.list()[i].toString());
+				}
+
+				ArrayAdapterItem spinnerAdapter = new ArrayAdapterItem(this,
+						R.layout.list_view_row_item, items);
+				spinnerAdapter
+						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+				Spinner contextChooser = (Spinner) findViewById(R.id.spinnerName);
+				contextChooser.setOnItemSelectedListener(new OnItemSelectedListener() 
+		        {
+					@Override
+		            public void onItemSelected(AdapterView<?> parent, View v,int position, long id)
+		            {
+		            	PATH_HAMA = ((ObjectItem) ((Spinner) v.findViewById(R.id.spinnerName)).getItemAtPosition(position)).getFullname();
+		            }
+		            
+		            @Override
+		            public void onNothingSelected(AdapterView<?> parent) {		                
+		            }
+		        });
+				contextChooser.setAdapter(spinnerAdapter);
+			}
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -77,7 +132,7 @@ public class OptionsActivity extends Activity {
 				Uri uri = data.getData();
 
 				try {
-					copy(uri.getPath(), path);
+					copy(uri.getPath(), PATH_HAMA + "/" + new File(uri.getPath()).getName());
 				} catch (IOException e) {
 					Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG)
 							.show();
